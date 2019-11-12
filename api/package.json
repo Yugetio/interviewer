@@ -19,5 +19,9 @@
   "homepage": "https://github.com/Yugetio/interviewer#readme",
   "devDependencies": {
     "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.7.10"
   }
 }
