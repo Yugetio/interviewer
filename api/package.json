@@ -1,0 +1,23 @@
+{
+  "name": "interviewer",
+  "version": "0.0.1",
+  "description": "Questions and answers from the interview",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yugetio/interviewer.git"
+  },
+  "author": "Vladyslav Kaminskyi <vdkaminskyi@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yugetio/interviewer/issues"
+  },
+  "homepage": "https://github.com/Yugetio/interviewer#readme",
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  }
+}
