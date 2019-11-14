@@ -9,6 +9,10 @@ const noteSchema = new Schema(
     answer: {
       type: String,
       default: ""
+    },
+    categoryId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category'
     }
   },
   {

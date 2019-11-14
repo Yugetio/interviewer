@@ -7,7 +7,8 @@ const { mongoURL } = require("./configs");
 //_id to id and delete _v...
 mongoose.plugin(toJson);
 
-const noteRoutes = require('./routers/notes');
+const noteRoutes = require('./routers/notes.router');
+const categoryRoutes = require('./routers/categories.router');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use("/note", noteRoutes);
+app.use("/category", categoryRoutes);
 
 async function start() {
   try {
