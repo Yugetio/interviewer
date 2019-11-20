@@ -41,9 +41,10 @@ const getAllNotesByCategoryId = async (req, res) => {
 
 //1.параметр это поле какой розворачиваем, 2-й параметр это то какие поля мы достаем оттуда( то же что и селект )
 //.populate('userId', 'email name') 
-  const category = await Category.findById(req.params.id).populate("notes");
+  // const category = await Category.findById(req.params.id).populate("notes");
 
-  res.json(category.notes);
+  // res.json(category.notes);
+  res.json({message: 'rewrite method'})
 };
 
 const getNoteById = async (req, res) => {
@@ -60,29 +61,30 @@ const editNote = async (req, res) => {
 };
 
 const deleteNoteById = async (req, res) => {
-  const { id } = req.params;
+  // const { id } = req.params;
 
-  const note = await Note.findById(id);
-  const category = await Category.findById(note.categoryId);
+  // const note = await Note.findById(id);
+  // const category = await Category.findById(note.categoryId);
 
-  if (!note) {
-    res.status(404).json({ message: "Note didn't found" });
+  // if (!note) {
+  //   res.status(404).json({ message: "Note didn't found" });
 
-    throw new HttpError[404]("Note didn't found");
-  }
+  //   throw new HttpError[404]("Note didn't found");
+  // }
 
-  if (!category) {
-    res.status(404).json({ message: "Category didn't found" });
+  // if (!category) {
+  //   res.status(404).json({ message: "Category didn't found" });
 
-    throw new HttpError[404]("Category didn't found");
-  }
+  //   throw new HttpError[404]("Category didn't found");
+  // }
 
-  await Note.findByIdAndDelete(id);
+  // await Note.findByIdAndDelete(id);
 
-  category.notes.pull(id);
-  await category.save();
+  // category.notes.pull(id);
+  // await category.save();
 
-  res.status(202).json({ id, message: "deleted" });
+  // res.status(202).json({ id, message: "deleted" });
+  res.json({message: 'rewrite method'})
 };
 
 module.exports = {
