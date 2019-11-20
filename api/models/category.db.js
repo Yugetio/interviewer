@@ -5,12 +5,10 @@ const categorySchema = new Schema({
     type: String,
     required: true
   },
-  notes: [
-    {
+  parentId: {
       type: Schema.Types.ObjectId,
-      ref: 'Note'
+      default: null
     }
-  ]
 });
 
 module.exports = model('Category', categorySchema);
