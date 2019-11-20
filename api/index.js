@@ -2,7 +2,9 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const toJson = require('@meanie/mongoose-to-json');
-const { mongoURL } = require("./configs");
+const dotenv = require('dotenv');
+
+dotenv.config()
 
 //_id to id and delete _v...
 mongoose.plugin(toJson);
@@ -21,11 +23,13 @@ app.use("/category", categoryRoutes);
 
 async function start() {
   try {
-    await mongoose.connect(mongoURL, {
+    await mongoose.connect(process.env.MONGODB_URL, {
       useNewUrlParser: true,
       useFindAndModify: false,
       useUnifiedTopology: true
     });
+    
+    mongoose.Promise = global.Promise;
 
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
