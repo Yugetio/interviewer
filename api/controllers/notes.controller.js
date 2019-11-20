@@ -31,7 +31,16 @@ const getAllNotes = async (req, res) => {
   res.status(200).json(notes);
 };
 
+//https://github.com/Automattic/mongoose/issues/1068
+//http://qaru.site/questions/151091/querying-after-populate-in-mongoose
+
+//.populate('tags').where('tags.tagName').in(['funny', 'politics']) 
+//.populate( 'tags', null, { tagName: { $in: ['funny', 'politics'] } } )
+
 const getAllNotesByCategoryId = async (req, res) => {
+
+//1.параметр это поле какой розворачиваем, 2-й параметр это то какие поля мы достаем оттуда( то же что и селект )
+//.populate('userId', 'email name') 
   const category = await Category.findById(req.params.id).populate("notes");
 
   res.json(category.notes);

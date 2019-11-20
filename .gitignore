@@ -2,6 +2,8 @@
 
 #privat
 configs
+db
+.env
 
 # dependencies
 node_modules
