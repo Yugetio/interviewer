@@ -12,7 +12,13 @@ const noteSchema = new Schema(
     },
     categoryId: {
       type: Schema.Types.ObjectId,
-      ref: 'Category'
+      ref: 'Category',
+      default: null
+    },
+    authorId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
     }
   },
   {
