@@ -6,7 +6,7 @@ services:
     build: .
     restart: always
     ports:
-      - 3000:3000
+      - '${PORT}:3000'
     volumes:
       - ./api:/app
       - /app/node_modules
@@ -21,8 +21,8 @@ services:
     volumes:
       - ./db/mongo:/data/db
     # environment:
-    #   MONGO_INITDB_ROOT_USERNAME: notes
-    #   MONGO_INITDB_ROOT_PASSWORD: 123456
+    #   - 'MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}'
+    #   - 'MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}'
 
   mongo-express:
     image: mongo-express
@@ -33,8 +33,8 @@ services:
       - ME_CONFIG_MONGODB_SERVER=mongo
       - ME_CONFIG_MONGODB_PORT=27017
       # - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
-      # - ME_CONFIG_MONGODB_AUTH_DATABASE=notes
-      # - ME_CONFIG_MONGODB_ADMINUSERNAME=notes
-      # - 'ME_CONFIG_MONGODB_ADMINPASSWORD=123456'
+      # - 'ME_CONFIG_MONGODB_AUTH_DATABASE=${MONGO_ROOT_USERNAME}'
+      # - 'ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_ROOT_USERNAME}'
+      # - 'ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_ROOT_PASSWORD}'
     depends_on:
       - mongo
