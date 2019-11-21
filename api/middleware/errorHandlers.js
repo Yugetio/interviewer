@@ -11,9 +11,9 @@ const checkIfParentCategoryExists = async (req, res, next) => {
       ObjectId.isValid(parentId) && (await Category.findById(parentId));
 
     if (!parentCategoryExists) {
-      res.status(404).json({ message: "Category didn't found" });
+      res.status(404).json({ message: "Parent category didn't found" });
 
-      throw new HttpError[404]("Category didn't found");
+      throw new HttpError[404]("Parent category didn't found");
     }
   }
 
