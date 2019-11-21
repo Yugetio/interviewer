@@ -1,50 +1,25 @@
-const HttpError = require("http-errors");
-const Category = require("../models/category.db");
-const Note = require("../models/note.db");
+const Note = require('../models/note.db');
 
 const createNote = async (req, res) => {
-  const category = await Category.findById(req.body.categoryId);
-
-  if (!category) {
-    res.status(404).json({ message: "Category didn't found" });
-
-    throw new HttpError[404]("Category didn't found");
-  }
+  const parentId = req.params.id || null;
 
   const note = new Note({
     question: req.body.question,
     answer: req.body.answer,
-    categoryId: req.body.categoryId
+    parentId,
+    authorId: '5dd6df247e10f300de647ecc'
   });
 
-  category.notes.push(note);
-
   await note.save();
-  await category.save();
 
   res.status(201).json(note);
 };
 
+//must be get all user's notes  (to rewrite)
 const getAllNotes = async (req, res) => {
   const notes = await Note.find();
 
   res.status(200).json(notes);
-};
-
-//https://github.com/Automattic/mongoose/issues/1068
-//http://qaru.site/questions/151091/querying-after-populate-in-mongoose
-
-//.populate('tags').where('tags.tagName').in(['funny', 'politics']) 
-//.populate( 'tags', null, { tagName: { $in: ['funny', 'politics'] } } )
-
-const getAllNotesByCategoryId = async (req, res) => {
-
-//1.параметр это поле какой розворачиваем, 2-й параметр это то какие поля мы достаем оттуда( то же что и селект )
-//.populate('userId', 'email name') 
-  // const category = await Category.findById(req.params.id).populate("notes");
-
-  // res.json(category.notes);
-  res.json({message: 'rewrite method'})
 };
 
 const getNoteById = async (req, res) => {
@@ -57,14 +32,13 @@ const editNote = async (req, res) => {
   const { id } = req.params;
   await Note.findByIdAndUpdate(id, req.body);
 
-  res.status(202).json({ id, message: "updated" });
+  res.status(202).json({ id, message: 'updated' });
 };
 
 const deleteNoteById = async (req, res) => {
   // const { id } = req.params;
 
   // const note = await Note.findById(id);
-  // const category = await Category.findById(note.categoryId);
 
   // if (!note) {
   //   res.status(404).json({ message: "Note didn't found" });
@@ -72,26 +46,16 @@ const deleteNoteById = async (req, res) => {
   //   throw new HttpError[404]("Note didn't found");
   // }
 
-  // if (!category) {
-  //   res.status(404).json({ message: "Category didn't found" });
-
-  //   throw new HttpError[404]("Category didn't found");
-  // }
-
   // await Note.findByIdAndDelete(id);
 
-  // category.notes.pull(id);
-  // await category.save();
-
   // res.status(202).json({ id, message: "deleted" });
-  res.json({message: 'rewrite method'})
+  res.json({ message: 'to rewrite method' });
 };
 
 module.exports = {
   createNote,
   getAllNotes,
   getNoteById,
-  getAllNotesByCategoryId,
   editNote,
   deleteNoteById
 };
