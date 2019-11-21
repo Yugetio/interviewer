@@ -15,7 +15,7 @@ const createCategory = async (req, res) => {
 };
 
 const getAllCategory = async (req, res) => {
-  let categories = await Category.find();
+  const categories = await Category.find();
 
   res.json(categories);
 };
@@ -23,8 +23,8 @@ const getAllCategory = async (req, res) => {
 const getCategoryById = async (req, res) => {
   const parentId = req.params.id || null;
 
-  let categories = await Category.find({ parentId }) || [];
-  let notes = await Notes.find({ parentId }) || [];
+  const categories = await Category.find({ parentId }) || [];
+  const notes = await Notes.find({ parentId }) || [];
 
   res.json({ categories, notes });
 };
