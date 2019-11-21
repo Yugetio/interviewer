@@ -10,7 +10,7 @@ const noteSchema = new Schema(
       type: String,
       default: ""
     },
-    categoryId: {
+    parentId: {
       type: Schema.Types.ObjectId,
       ref: 'Category',
       default: null
