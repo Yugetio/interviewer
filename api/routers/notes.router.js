@@ -1,18 +1,15 @@
-const { Router } = require("express");
+const { Router } = require('express');
 const controllers = require('../controllers/notes.controller');
 
 const router = Router();
 
-router.post("/", controllers.createNote);
+router.get('/all', controllers.getAllNotes);
 
-router.get("/all", controllers.getAllNotes);
-
-router.get("/:id", controllers.getNoteById);
-
-router.get("/category/:id", controllers.getAllNotesByCategoryId)
-
-router.put("/:id", controllers.editNote)
-
-router.delete("/:id", controllers.deleteNoteById)
+router
+  .route('/:id?')
+  .post(controllers.createNote)
+  .get(controllers.getNoteById)
+  .put(controllers.editNote)
+  .delete(controllers.deleteNoteById);
 
 module.exports = router;
