@@ -9,10 +9,10 @@ router.get('/all', controllers.getAllCategory);
 router
   .route('/:id?')
   .post(
-    middleware.checkIfParentCategoryExists,
+    middleware.checkParentCategoryIsExists,
     controllers.createCategory)
   .get(
-    middleware.checkIfParentCategoryExists,
+    middleware.checkParentCategoryIsExists,
     controllers.getCategoryById);
 
 module.exports = router;

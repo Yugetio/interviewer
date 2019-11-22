@@ -3,7 +3,7 @@ const ObjectId = require('mongoose').Types.ObjectId;
 
 const Category = require('../models/category.db');
 
-const checkIfParentCategoryExists = async (req, res, next) => {
+const checkParentCategoryIsExists = async (req, res, next) => {
   const parentId = req.params.id || null;
 
   if (parentId) {
@@ -27,10 +27,10 @@ const isValidIdFromParams = (req, res, next) => {
     throw new HttpError[400]("Id isn't valid");
   }
 
-  next()
+  next();
 };
 
 module.exports = {
-  checkIfParentCategoryExists,
+  checkParentCategoryIsExists,
   isValidIdFromParams
 };

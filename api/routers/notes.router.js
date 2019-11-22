@@ -8,7 +8,7 @@ router.get('/all', controllers.getAllNotes);
 
 router
   .route('/:id?')
-  .post(middleware.checkIfParentCategoryExists, controllers.createNote)
+  .post(middleware.checkParentCategoryIsExists, controllers.createNote)
   .get(middleware.isValidIdFromParams, controllers.getNoteById)
   .put(middleware.isValidIdFromParams, controllers.editNote)
   .delete(middleware.isValidIdFromParams, controllers.deleteNoteById);
