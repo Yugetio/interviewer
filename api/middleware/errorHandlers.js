@@ -20,6 +20,17 @@ const checkIfParentCategoryExists = async (req, res, next) => {
   next();
 };
 
+const isValidIdFromParams = (req, res, next) => {
+  if (!ObjectId.isValid(req.params.id)) {
+    res.status(400).json({ message: "Id isn't valid" });
+
+    throw new HttpError[400]("Id isn't valid");
+  }
+
+  next()
+};
+
 module.exports = {
-  checkIfParentCategoryExists
+  checkIfParentCategoryExists,
+  isValidIdFromParams
 };

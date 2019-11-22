@@ -8,11 +8,9 @@ router.get('/all', controllers.getAllNotes);
 
 router
   .route('/:id?')
-  .post(
-    middleware.checkIfParentCategoryExists,
-    controllers.createNote)
-  .get(controllers.getNoteById)
-  .put(controllers.editNote)
-  .delete(controllers.deleteNoteById);
+  .post(middleware.checkIfParentCategoryExists, controllers.createNote)
+  .get(isValidIdFromParams, controllers.getNoteById)
+  .put(isValidIdFromParams, controllers.editNote)
+  .delete(isValidIdFromParams, controllers.deleteNoteById);
 
 module.exports = router;
