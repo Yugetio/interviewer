@@ -4,10 +4,12 @@ const noteSchema = new Schema(
   {
     question: {
       type: String,
-      required: true
+      trim: true,
+      required: true      
     },
     answer: {
       type: String,
+      trim: true,
       default: ""
     },
     parentId: {
