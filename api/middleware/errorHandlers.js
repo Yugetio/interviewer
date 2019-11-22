@@ -2,6 +2,7 @@ const HttpError = require('http-errors');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 const Category = require('../models/category.db');
+const Note = require('../models/note.db');
 
 const checkParentCategoryIsExists = async (req, res, next) => {
   const parentId = req.params.id || null;
@@ -11,9 +12,7 @@ const checkParentCategoryIsExists = async (req, res, next) => {
       ObjectId.isValid(parentId) && (await Category.findById(parentId));
 
     if (!parentCategoryExists) {
-      res.status(404).json({ message: "Parent category didn't found" });
-
-      throw new HttpError[404]("Parent category didn't found");
+      next(new HttpError[404]("Parent category didn't found"));
     }
   }
 
@@ -22,15 +21,60 @@ const checkParentCategoryIsExists = async (req, res, next) => {
 
 const isValidIdFromParams = (req, res, next) => {
   if (!ObjectId.isValid(req.params.id)) {
-    res.status(400).json({ message: "Id isn't valid" });
-
-    throw new HttpError[400]("Id isn't valid");
+    next(new HttpError[400]("Id isn't valid"));
   }
 
   next();
 };
 
+const checkNotesIsExists = async (req, res, next) => {
+  const note = await Note.findById(req.params.id);
+
+  if (!note) {
+    next(new HttpError[404]("Note didn't found"));
+  }
+
+  next();
+};
+
+const catchAsyncErrors = fn => (req, res, next) =>
+  fn(req, res, next).catch(next);
+
+/*
+  Development Error Handler
+  Catch all errors in our controllers
+  In development we show good error messages so if we hit a syntax error or any other previously un-handled error, 
+  we can show info on what happened
+*/
+const developmentErrors = (err, req, res, next) => {
+  const { message, status, data } = err;
+  err.stack = err.stack || '';
+  // Formatting our error stack trace little bit
+  const stackTraceFormatted = err.stack
+    .split('\n')
+    .map(i => i.replace(__dirname.split('/server')[0], '').trim())
+    .slice(0, 5);
+
+  // Send error response
+  res
+    .status(err.status || 500)
+    .json({ message, status, data, stackTraceFormatted });
+};
+
+/*
+  Production Error Handler
+  No stacktraces are leaked to user
+*/
+const productionErrors = (err, req, res, next) => {
+  const { message, status, data } = err;
+  res.status(status || 500).json({ message, status, data });
+};
+
 module.exports = {
   checkParentCategoryIsExists,
-  isValidIdFromParams
+  isValidIdFromParams,
+  checkNotesIsExists,
+  catchAsyncErrors,
+  developmentErrors,
+  productionErrors
 };
