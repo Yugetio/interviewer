@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const controllers = require('../controllers/notes.controller');
-const middleware = require('../middleware/errorHandlers');
+const middleware = require('../middleware');
 
 const router = Router();
 
