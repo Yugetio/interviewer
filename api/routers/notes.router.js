@@ -6,26 +6,17 @@ const router = Router();
 
 router.get('/all', controllers.getAllNotes);
 
+router.post(
+  '/:id?',
+  middleware.checkParentCategoryIsExists,
+  middleware.catchAsyncErrors(controllers.createNote)
+);
+
 router
-  .route('/:id?')
-  .post(
-    middleware.checkParentCategoryIsExists,
-    middleware.catchAsyncErrors(controllers.createNote)
-  )
-  .get(
-    middleware.isValidIdFromParams,
-    middleware.checkNotesIsExists,
-    middleware.catchAsyncErrors(controllers.getNoteById)
-  )
-  .put(
-    middleware.isValidIdFromParams,
-    middleware.checkNotesIsExists,
-    middleware.catchAsyncErrors(controllers.editNote)
-  )
-  .delete(
-    middleware.isValidIdFromParams,
-    middleware.checkNotesIsExists,
-    middleware.catchAsyncErrors(controllers.deleteNoteById)
-  );
+  .route('/:id')
+  .all(middleware.isValidIdFromParams, middleware.checkNotesIsExists)
+  .get(middleware.catchAsyncErrors(controllers.getNoteById))
+  .put(middleware.catchAsyncErrors(controllers.editNote))
+  .delete(middleware.catchAsyncErrors(controllers.deleteNoteById));
 
 module.exports = router;

@@ -8,13 +8,8 @@ router.get('/all', controllers.getAllCategory);
 
 router
   .route('/:id?')
-  .post(
-    middleware.checkParentCategoryIsExists,
-    middleware.catchAsyncErrors(controllers.createCategory)
-  )
-  .get(
-    middleware.checkParentCategoryIsExists,
-    middleware.catchAsyncErrors(controllers.getCategoryById)
-  );
+  .all(middleware.checkParentCategoryIsExists)
+  .post(middleware.catchAsyncErrors(controllers.createCategory))
+  .get(middleware.catchAsyncErrors(controllers.getCategoryById));
 
 module.exports = router;
