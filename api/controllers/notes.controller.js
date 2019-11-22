@@ -36,20 +36,11 @@ const editNote = async (req, res) => {
 };
 
 const deleteNoteById = async (req, res) => {
-  // const { id } = req.params;
+  const { id } = req.params;
 
-  // const note = await Note.findById(id);
+  await Note.findByIdAndDelete(id);
 
-  // if (!note) {
-  //   res.status(404).json({ message: "Note didn't found" });
-
-  //   throw new HttpError[404]("Note didn't found");
-  // }
-
-  // await Note.findByIdAndDelete(id);
-
-  // res.status(202).json({ id, message: "deleted" });
-  res.json({ message: 'to rewrite method' });
+  res.status(202).json({ id, message: "deleted" });
 };
 
 module.exports = {
