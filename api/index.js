@@ -22,6 +22,9 @@ app.use(express.json());
 app.use('/note', noteRoutes);
 app.use('/category', categoryRoutes);
 
+// If that above routes didn't work, we get 404 and forward to error handler
+app.use(middleware.routeNotFound);
+
 if (process.env.ENV === 'development') {
   /* Development Error Handler - Prints stack trace */
   app.use(middleware.developmentErrors);

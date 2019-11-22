@@ -40,6 +40,12 @@ const checkNotesIsExists = async (req, res, next) => {
 const catchAsyncErrors = fn => (req, res, next) =>
   fn(req, res, next).catch(next);
 
+  /*
+  Not Found Error Handler
+  If we hit a route that wasn't found, we mark it as 404 and pass it along to the next error handler to display
+*/
+const routeNotFound = (req, res, next) => next(new HttpError[404]('Not Found! Wrong api endpoint'));
+
 /*
   Development Error Handler
   Catch all errors in our controllers
@@ -75,6 +81,7 @@ module.exports = {
   isValidIdFromParams,
   checkNotesIsExists,
   catchAsyncErrors,
+  routeNotFound,
   developmentErrors,
   productionErrors
 };
