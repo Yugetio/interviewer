@@ -11,6 +11,8 @@ mongoose.plugin(toJson);
 
 const noteRoutes = require('./routers/notes.router');
 const categoryRoutes = require('./routers/categories.router');
+const userRouters = require('./routers/user.router');
+
 const middleware = require('./middleware/errorHandlers');
 
 const app = express();
@@ -19,6 +21,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use('/auth', userRouters)
 app.use('/note', noteRoutes);
 app.use('/category', categoryRoutes);
 
