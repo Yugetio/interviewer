@@ -1,5 +1,4 @@
 const { validationResult, params } = require('express-validator');
-const ObjectId = require('mongoose').Types.ObjectId;
 const HttpError = require('http-errors');
 
 const validate = validations => {
@@ -16,7 +15,6 @@ const validate = validations => {
     next(validateError);
   };
 };
-
 
 module.exports = {
   validate

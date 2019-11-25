@@ -1,5 +1,4 @@
 const HttpError = require('http-errors');
-const ObjectId = require('mongoose').Types.ObjectId;
 
 const Category = require('../models/category.db');
 const Note = require('../models/note.db');
@@ -8,10 +7,9 @@ const checkParentCategoryIsExists = async (req, res, next) => {
   const parentId = req.params.id || null;
 
   if (parentId) {
-    const parentCategoryExists =
-      ObjectId.isValid(parentId) && (await Category.findById(parentId));
+    const parentCategory = await Category.findById(parentId);
 
-    if (!parentCategoryExists) {
+    if (!parentCategory) {
       next(new HttpError[404]("Parent category didn't found"));
     }
   }
