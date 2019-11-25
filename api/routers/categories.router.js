@@ -1,9 +1,7 @@
-const { Router } = require('express');
+const router = require('express').Router();
 const { param } = require('express-validator');
 const controllers = require('../controllers/category.controller');
 const middleware = require('../middleware');
-
-const router = Router();
 
 router.get('/all', controllers.getAllCategory);
 
