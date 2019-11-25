@@ -19,14 +19,6 @@ const checkParentCategoryIsExists = async (req, res, next) => {
   next();
 };
 
-const isValidIdFromParams = (req, res, next) => {
-  if (!ObjectId.isValid(req.params.id)) {
-    next(new HttpError[400]("Id isn't valid"));
-  }
-
-  next();
-};
-
 const checkNotesIsExists = async (req, res, next) => {
   const note = await Note.findById(req.params.id);
 
@@ -78,7 +70,6 @@ const productionErrors = (err, req, res, next) => {
 
 module.exports = {
   checkParentCategoryIsExists,
-  isValidIdFromParams,
   checkNotesIsExists,
   catchAsyncErrors,
   routeNotFound,
