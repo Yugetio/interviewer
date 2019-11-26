@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const mongoose = require('mongoose');
 const toJson = require('@meanie/mongoose-to-json');
 const dotenv = require('dotenv');
@@ -13,7 +12,7 @@ const noteRoutes = require('./routers/notes.router');
 const categoryRoutes = require('./routers/categories.router');
 const userRouters = require('./routers/user.router');
 
-const middleware = require('./middleware/errorHandlers');
+const middleware = require('./middleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,6 +26,8 @@ app.use('/category', categoryRoutes);
 
 // If that above routes didn't work, we get 404 and forward to error handler
 app.use(middleware.routeNotFound);
+
+app.use(middleware.dbValidationErrors);
 
 if (process.env.ENV === 'development') {
   /* Development Error Handler - Prints stack trace */
