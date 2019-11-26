@@ -11,12 +11,16 @@ const userSchema = new Schema({
   password: {
     type: String,
     trim: true,
-    required: true
+    required: true,
+    max: 1024,
+    min: 6
   },
   fullname: {
     type: String,
     trim: true,
-    required: true
+    required: true,
+    min: 5,
+    max: 255
   },
   privilege: {
     type: String,
