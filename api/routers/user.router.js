@@ -19,7 +19,7 @@ router.route('/register').post(
       .isLength({ min: 5, max: 255 })
       .withMessage('must be at least 5 chars long')
   ]),
-  controllers.register
+  middleware.catchAsyncErrors(controllers.register)
 );
 
 router.route('/login').post(
@@ -34,7 +34,7 @@ router.route('/login').post(
       .isLength({ min: 6, max: 1024 })
       .withMessage('must be at least 6 chars long')
   ]),
-  controllers.login
+  middleware.catchAsyncErrors(controllers.login)
 );
 
 module.exports = router;
