@@ -10,7 +10,7 @@ router.route('/register').post(
       .normalizeEmail(),
     body('password')
       .trim()
-      .matches(/^\S*$/g)
+      .matches(/^\S*$/, 'g')
       .withMessage('field should not include spaces')
       .isLength({ min: 6, max: 1024 })
       .withMessage('must be at least 6 chars long'),
@@ -29,7 +29,7 @@ router.route('/login').post(
       .normalizeEmail(),
     body('password')
       .trim()
-      .matches(/^\S*$/g)
+      .matches(/^\S*$/, 'g')
       .withMessage('field should not include spaces')
       .isLength({ min: 6, max: 1024 })
       .withMessage('must be at least 6 chars long')
