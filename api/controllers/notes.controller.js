@@ -7,7 +7,7 @@ const createNote = async (req, res) => {
     question: req.body.question,
     answer: req.body.answer,
     parentId,
-    authorId: '5dd6df247e10f300de647ecc'
+    authorId: '5dde3e7a7f9f3400c5becd87'
   });
 
   await note.save();
