@@ -1,32 +1,5 @@
 const HttpError = require('http-errors');
 
-const Category = require('../models/category.db');
-const Note = require('../models/note.db');
-
-const checkParentCategoryIsExists = async (req, res, next) => {
-  const parentId = req.params.id || null;
-
-  if (parentId) {
-    const parentCategory = await Category.findById(parentId);
-
-    if (!parentCategory) {
-      next(new HttpError[404]("Parent category didn't found"));
-    }
-  }
-
-  next();
-};
-
-const checkNotesIsExists = async (req, res, next) => {
-  const note = await Note.findById(req.params.id);
-
-  if (!note) {
-    next(new HttpError[404]("Note didn't found"));
-  }
-
-  next();
-};
-
 const catchAsyncErrors = fn => (req, res, next) =>
   fn(req, res, next).catch(next);
 
@@ -85,8 +58,6 @@ const productionErrors = (err, req, res, next) => {
 };
 
 module.exports = {
-  checkParentCategoryIsExists,
-  checkNotesIsExists,
   catchAsyncErrors,
   routeNotFound,
   dbValidationErrors,
