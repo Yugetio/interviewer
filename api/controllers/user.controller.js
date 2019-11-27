@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const HttpError = require('http-errors');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user.db');
 
 const register = async (req, res) => {
@@ -23,7 +24,8 @@ const login = async (req, res) => {
   const validPass = await bcrypt.compare(req.body.password, user.password);
   if (!validPass) throw new HttpError[400]('Invalid password');
 
-  res.send('logged in');
+  const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET);
+  res.header('auth-token', token).send(token);
 };
 
 module.exports = {
