@@ -38,4 +38,6 @@ router.route('/login').post(
   middleware.catchAsyncErrors(controllers.login)
 );
 
+router.post('/token', middleware.catchAsyncErrors(controllers.token))
+
 module.exports = router;

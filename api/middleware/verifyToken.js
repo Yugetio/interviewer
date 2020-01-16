@@ -10,6 +10,6 @@ module.exports = (req, res, next) => {
     req.user = verified;
     next();
   } catch (e) {
-    next(new HttpError[400]('Invalid Token'));
+    next(new HttpError[403]('Invalid Token'));
   }
 };
