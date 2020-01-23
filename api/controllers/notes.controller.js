@@ -7,7 +7,7 @@ const createNote = async (req, res) => {
     question: req.body.question,
     answer: req.body.answer,
     parentId,
-    authorId: req.user.id
+    authorId: '5dd6df247e10f300de647ecc'
   });
 
   await note.save();
@@ -32,7 +32,7 @@ const editNote = async (req, res) => {
   const { id } = req.params;
   await Note.findByIdAndUpdate(id, req.body);
 
-  res.status(202).json({ id, message: 'updated' });
+  res.json({ id, message: 'updated' });
 };
 
 const deleteNoteById = async (req, res) => {
@@ -40,7 +40,7 @@ const deleteNoteById = async (req, res) => {
 
   await Note.findByIdAndDelete(id);
 
-  res.status(202).json({ id, message: "deleted" });
+  res.json({ id, message: "deleted" });
 };
 
 module.exports = {

@@ -1,9 +1,14 @@
 const bcrypt = require('bcryptjs');
 const HttpError = require('http-errors');
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 const User = require('../models/user.db');
 
 const register = async (req, res) => {
+  const emailExists = await User.findOne({ email: req.body.email });
+  if (emailExists) {
+    throw new HttpError[400]('Email already exists');
+  }
+
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(req.body.password, salt);
 
@@ -24,8 +29,8 @@ const login = async (req, res) => {
   const validPass = await bcrypt.compare(req.body.password, user.password);
   if (!validPass) throw new HttpError[400]('Invalid password');
 
-  const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET);
-  res.header('auth-token', token).send(token);
+  // const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET);
+  res.send('success');
 };
 
 module.exports = {

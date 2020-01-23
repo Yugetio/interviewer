@@ -7,7 +7,6 @@ router.get('/all', controllers.getAllNotes);
 
 router.post(
   '/:id?',
-  middleware.verifyToken,
   middleware.validate([
     param('id', "Invalid id parameter").if(param('id').exists()).isMongoId(),
     body('question', 'Question is required')

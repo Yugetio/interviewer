@@ -1,0 +1,534 @@
+openapi: 3.0.1
+info:
+  title: Swagger API
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:3000/'
+paths:
+  /auth/register:
+    post:
+      tags:
+        - User
+      summary: Create user
+      operationId: registerUser
+      requestBody:
+        description: Create user in db
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/User'
+
+        required: true
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Email already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'      
+        '422':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+
+  /category/all:
+     get:
+       tags:
+         - Category
+       summary: Get all categories
+       operationId: getAllCategories
+       responses:
+         '200':
+           description: successful operation
+           content:
+             application/json:
+               schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+  /category:
+    get:
+      tags:
+        - Category
+      summary: Get root categories and notes
+      operationId: getRootCategory
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    category:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Category'
+                    notes:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Note'
+
+        '404':
+          description: Parent category didn't found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '422':
+          description: Invalid id parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags:
+        - Category
+      summary: Create category in root
+      operationId: createCategoryInRoot
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Name category
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+  /category/{id}:
+    get:
+      tags:
+        - Category
+      summary: Find category by ID
+      operationId: getCategoryById
+      parameters:
+        - name: id
+          in: path
+          description: ID of category that needs to be fetched
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    category:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Category'
+                    notes:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Note'
+
+        '404':
+          description: Parent category didn't found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '422':
+          description: Invalid id parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags:
+        - Category
+      summary: Create category 
+      operationId: createCategory
+      parameters:
+        - name: id
+          in: path
+          description: ID of parent category 
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Name category
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '404':
+          description: Parent category didn't found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '422':
+          description: Invalid id parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    
+  /note/all:
+     get:
+       tags:
+         - Note
+       summary: Get all notes
+       operationId: getAllNotes
+       responses:
+         '200':
+           description: successful operation
+           content:
+             application/json:
+               schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note' 
+
+  /category:
+    get:
+      tags:
+        - Category
+      summary: Get root categories and notes
+      operationId: getRootCategory
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    category:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Category'
+                    notes:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Note'
+
+        '404':
+          description: Parent category didn't found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '422':
+          description: Invalid id parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags:
+        - Category
+      summary: Create category in root
+      operationId: createCategoryInRoot
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Name category
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /note:
+    post:
+      tags:
+        - Note
+      summary: Create note 
+      operationId: createNote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                answer:
+                  type: string
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '404':
+          description: Parent category didn't found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+
+  /note/{id}:
+    get:
+      tags:
+        - Note
+      summary: Find note by ID
+      operationId: getNoteById
+      parameters:
+        - name: id
+          in: path
+          description: ID of note that needs to be fetched
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+
+
+        '404':
+          description: Note didn't found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '422':
+          description: Invalid id parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags:
+        - Note
+      summary: Create note 
+      operationId: createNoteInParentCategory
+      parameters:
+        - name: id
+          in: path
+          description: ID of parent category 
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                answer:
+                  type: string
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '404':
+          description: Parent category didn't found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '422':
+          description: Invalid id parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    put:
+      tags:
+        - Note
+      summary: update note 
+      operationId: updateNote
+      parameters:
+        - name: id
+          in: path
+          description: ID of note 
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                answer:
+                  type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  message:
+                    type: string
+        '404':
+          description: Note did't found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '422':
+          description: Invalid id parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags:
+        - Note
+      summary: delete note 
+      operationId: deleteNote
+      parameters:
+        - name: id
+          in: path
+          description: ID of note 
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  message:
+                    type: string
+        '404':
+          description: Note did't found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '422':
+          description: Invalid id parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+
+components:
+  schemas:
+    Note:
+      type: object
+      properties:
+        id:
+          type: string
+        question:
+          type: string
+        answer:
+          type: string
+        parentId:
+          type: string
+        authorId:
+          type: string
+        createdAt:
+          type: string
+          format: date
+        updatedAt:
+          type: string
+          format: date
+      xml:
+        name: Note
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        parentId:
+          type: string
+      xml:
+        name: Category
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        fullname:
+          type: string
+      xml:
+        name: User
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+      xml:
+        name: Tag
+    ApiResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        status:
+          type: integer
+          format: int32
+        data:
+          type: object
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

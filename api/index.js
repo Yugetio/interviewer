@@ -1,5 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+// const session = require('express-session')
+// const MongoStore = require('connect-mongodb-session')(session)
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
 const toJson = require('@meanie/mongoose-to-json');
 const dotenv = require('dotenv');
 
@@ -17,8 +22,22 @@ const middleware = require('./middleware');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// const store = new MongoStore({
+//   collection: 'sessions',
+//   uri: MONGODB_URI
+// })
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// app.use(session({
+//   secret: 'some secret value',
+//   resave: false,
+//   saveUninitialized: false,
+//   // store
+// }))
 
 app.use('/auth', userRouters)
 app.use('/note', noteRoutes);

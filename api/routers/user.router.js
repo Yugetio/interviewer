@@ -19,7 +19,6 @@ router.route('/register').post(
       .isLength({ min: 5, max: 255 })
       .withMessage('must be at least 5 chars long')
   ]),
-  middleware.isEmailExists,
   middleware.catchAsyncErrors(controllers.register)
 );
 
