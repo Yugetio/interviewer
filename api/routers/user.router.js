@@ -37,4 +37,10 @@ router.route('/login').post(
   middleware.catchAsyncErrors(controllers.login)
 );
 
+router.route('/logout').get(middleware.catchAsyncErrors(controllers.logout));
+
+router
+  .route('/check')
+  .get(middleware.auth, (req, res) => res.json({ auth: true }));
+
 module.exports = router;

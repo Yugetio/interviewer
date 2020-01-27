@@ -29,11 +29,29 @@ const login = async (req, res) => {
   const validPass = await bcrypt.compare(req.body.password, user.password);
   if (!validPass) throw new HttpError[400]('Invalid password');
 
-  // const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET);
-  res.send('success');
+  req.session.user = {
+    id: user._id,
+    email: user.email,
+    fullname: user.fullname,
+    privilege: user.privilege
+  };
+  req.session.isAuthenticated = true;
+  req.session.save(err => {
+    if (err) {
+      throw err;
+    }
+    res.json({ message: 'success' });
+  });
+};
+
+const logout = async (req, res) => {
+  req.session.destroy(() => {
+    res.json({ message: 'success' });
+  });
 };
 
 module.exports = {
   register,
-  login
+  login,
+  logout
 };

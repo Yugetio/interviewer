@@ -41,6 +41,86 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
+  /auth/login:
+    post:
+      tags:
+        - User
+      summary: Auth
+      operationId: auth
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Email or password is wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'      
+        '422':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+
+  /auth/logout:
+    get:
+      tags:
+        - User
+      summary: Logout
+      operationId: logout
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /auth/check:
+    get:
+      security:
+        - cookieAuth: []
+      tags:
+        - User
+      summary: Check if auth
+      operationId: checkIfAuth
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: answer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  auth:
+                    type: boolean
 
   /category/all:
      get:
@@ -528,7 +608,7 @@ components:
         data:
           type: object
   securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: connect.sid

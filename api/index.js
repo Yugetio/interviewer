@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-// const session = require('express-session')
-// const MongoStore = require('connect-mongodb-session')(session)
+const session = require('express-session');
+const MongoStore = require('connect-mongodb-session')(session)
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
@@ -24,22 +24,27 @@ const PORT = process.env.PORT || 3000;
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// const store = new MongoStore({
-//   collection: 'sessions',
-//   uri: MONGODB_URI
-// })
+const store = new MongoStore({
+  collection: 'sessions',
+  uri: process.env.MONGODB_URL,
+  expires: 3600000 * 3
+})
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// app.use(session({
-//   secret: 'some secret value',
-//   resave: false,
-//   saveUninitialized: false,
-//   // store
-// }))
+app.use(
+  session({
+    secret: process.env.TOKEN_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    httpOnly: true,
+    maxAge: 3600000, 
+    store
+  })
+);
 
-app.use('/auth', userRouters)
+app.use('/auth', userRouters);
 app.use('/note', noteRoutes);
 app.use('/category', categoryRoutes);
 
