@@ -2,11 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session)
+const helmet = require('helmet');
+const compression = require('compression');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
 const toJson = require('@meanie/mongoose-to-json');
 const dotenv = require('dotenv');
+const path = require('path');
 
 dotenv.config();
 
@@ -22,7 +25,11 @@ const middleware = require('./middleware');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(helmet());
+app.use(compression());
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(express.static(path.join(__dirname, 'public')))
 
 const store = new MongoStore({
   collection: 'sessions',
@@ -43,6 +50,7 @@ app.use(
     store
   })
 );
+
 
 app.use('/auth', userRouters);
 app.use('/note', noteRoutes);
@@ -67,7 +75,7 @@ async function start() {
       useNewUrlParser: true,
       useCreateIndex: true,
       useFindAndModify: false,
-      useUnifiedTopology: true
+      useUnifiedTopology: true      
     });
 
     mongoose.Promise = global.Promise;
