@@ -4,20 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Home</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <p>hi</p>
-
-  <script>
-    const p = document.querySelector('p');
-    fetch('/category/all')
-  .then((response) => {
-    return response.json();
-  })
-  .then((res) => {
-    p.innerHTML = res[0].title
-  });
-  </script>
+  <script src="./main.js"></script>
 </body>
 </html>

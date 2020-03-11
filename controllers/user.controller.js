@@ -5,6 +5,7 @@ const User = require('../models/user.db');
 
 const register = async (req, res) => {
   const emailExists = await User.findOne({ email: req.body.email });
+
   if (emailExists) {
     throw new HttpError[400]('Email already exists');
   }

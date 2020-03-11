@@ -296,64 +296,64 @@ paths:
                 items:
                   $ref: '#/components/schemas/Note' 
 
-  /category:
-    get:
-      tags:
-        - Category
-      summary: Get root categories and notes
-      operationId: getRootCategory
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    category:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Category'
-                    notes:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Note'
-
-        '404':
-          description: Parent category didn't found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        '422':
-          description: Invalid id parameter
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-    post:
-      tags:
-        - Category
-      summary: Create category in root
-      operationId: createCategoryInRoot
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                  description: Name category
-      responses:
-        '201':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
+#  /category:
+#    get:
+#      tags:
+#        - Category
+#      summary: Get root categories and notes
+#      operationId: getRootCategory
+#      responses:
+#        '200':
+#          description: successful operation
+#          content:
+#            application/json:
+#              schema:
+#                type: array
+#                items:
+#                  type: object
+#                  properties:
+#                    category:
+#                      type: array
+#                      items:
+#                        $ref: '#/components/schemas/Category'
+#                    notes:
+#                      type: array
+#                      items:
+#                        $ref: '#/components/schemas/Note'
+#
+#        '404':
+#          description: Parent category didn't found
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/ApiResponse'
+#        '422':
+#          description: Invalid id parameter
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/ApiResponse'
+#    post:
+#      tags:
+#        - Category
+#      summary: Create category in root
+#      operationId: createCategoryInRoot
+#      requestBody:
+#        content:
+#          application/json:
+#            schema:
+#              type: object
+#              properties:
+#                title:
+#                  type: string
+#                  description: Name category
+#      responses:
+#        '201':
+#          description: successful operation
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/ApiResponse'
   /note:
     post:
       tags:
